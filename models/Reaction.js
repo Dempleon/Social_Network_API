@@ -1,4 +1,4 @@
-const {Schema, Types, Model} = require('mongoose');
+const { Schema, Types, Model } = require('mongoose');
 
 const reactionSchema = new Schema(
     {
@@ -22,3 +22,9 @@ const reactionSchema = new Schema(
         }
     }
 )
+
+reactionSchema.methods.getCreateDate = function () {
+    console.log(`Todo: edit this getter function to format the date: ${this.createdAt}`);
+}
+
+module.exports = reactionSchema;
