@@ -73,8 +73,8 @@ module.exports = {
 
     // add a new friend to the users friend list
     addFriend(req, res) {
-        User.findByIdAndUpdate(
-            {_id: req.params.studentsId},
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
             {$addToSet: {friends: req.body}},
             {runValidators: true, new: true}
         )
@@ -90,5 +90,21 @@ module.exports = {
             })
     },
 
-    
+    removeFriend(req, res) {
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$pull: {friends: {userId: req.params.userId}}},
+            {runValidators: true, new: true}
+        )
+            .then((user) => {
+                if(!user) {
+                    res.status(404).json({message: 'User not found'});
+                } else {
+                    res.json(student)
+                }
+            })
+            .catch((err) => {
+                res.status(500).json(err)
+            })
+    }
 }
