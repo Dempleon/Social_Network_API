@@ -90,10 +90,11 @@ module.exports = {
             })
     },
 
+    // remove a user from the friends array
     removeFriend(req, res) {
         User.findOneAndUpdate(
             {_id: req.params.userId},
-            {$pull: {friends: {userId: req.params.userId}}},
+            {$pull: {friends: {userId: req.params.friendsId}}},
             {runValidators: true, new: true}
         )
             .then((user) => {
