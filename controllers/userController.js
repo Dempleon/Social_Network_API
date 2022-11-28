@@ -69,5 +69,26 @@ module.exports = {
             .catch((err) => {
                 res.status(500).json(err)
             });
-    }
+    },
+
+    // add a new friend to the users friend list
+    addFriend(req, res) {
+        User.findByIdAndUpdate(
+            {_id: req.params.studentsId},
+            {$addToSet: {friends: req.body}},
+            {runValidators: true, new: true}
+        )
+            .then((user) => {
+                if(!user) {
+                    res.status(404).json({message: 'User not found'})
+                } else {
+                    res.json(user)
+                }
+            })
+            .catch((err) => {
+                res.status(500).json(err)
+            })
+    },
+
+    
 }
