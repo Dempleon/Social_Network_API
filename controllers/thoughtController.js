@@ -20,4 +20,24 @@ module.exports = {
             })
             .catch((err) => {res.status(500).json(err)})
     },
+
+    // post route to create a new thought
+    createThought(req, res) {
+        Thought.create(req.body)
+            .then((thought) => {
+                return User.findOneAndUpdate(
+                    {_id: req.body.userId},
+                    {$addToSet: {thoughts: thought._id}},
+                    {new: true}
+                );
+            })
+            .then((user) => {
+                if(!user) {
+                    res.status(404).json({message: 'Thought created but User not found'})
+                } else {
+                    res.json('Created thought')
+                }
+            })
+            .catch((err) => {res.status(500).json(err)})
+    }
 }
