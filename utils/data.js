@@ -121,7 +121,7 @@ const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 // function to get random username
 const getRandomUsername = () => {
-    return `${getRandomArrItem(names)}`
+    return `${getRandomArrItem(usernames)}`
 }
 
 // function to get random thought

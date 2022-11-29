@@ -31,12 +31,16 @@ module.exports = {
                     res.json({ user })
                 }
             })
+            .catch((err) => {
+                console.log(err)
+                res.status(500).json(err)
+            })
     },
 
     // controller for user post 
     createUser(req, res) {
         User.create(req.body)
-            .then((user) => res.json(student))
+            .then((user) => res.json(user))
             .catch((err) => res.status(500).json(err));
     },
 
@@ -47,7 +51,7 @@ module.exports = {
                 if (!user) {
                     res.status(404).json({ message: 'User not found' })
                 } else {
-                    //todo: delete associated thoughts when user is deleted
+                    res.json(user);
                 }
             })
             .catch((err) => {
@@ -58,12 +62,17 @@ module.exports = {
 
     // controller to update single user
     updateUser(req, res) {
-        User.findOneAndUpdate({_id: req.params.userId})
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
             .then((user) => {
-                if(!user){
-                    res.status(404).json({message: 'User not found'})
+                if (!user) {
+                    res.status(404).json({ message: 'User not found' })
                 } else {
                     // todo: update associated thoughts
+                    res.json(user)
                 }
             })
             .catch((err) => {
@@ -72,15 +81,15 @@ module.exports = {
     },
 
     // controller to add a new friend to the users friend list
-    addFriend(req, res) {
+    async addFriend(req, res) {
         User.findOneAndUpdate(
-            {_id: req.params.userId},
-            {$addToSet: {friends: req.body}},
-            {runValidators: true, new: true}
+            { _id: req.params.userId },
+            { $addToSet: { friends: { _id: req.body.friendsId } } },
+            { new: true }
         )
             .then((user) => {
-                if(!user) {
-                    res.status(404).json({message: 'User not found'})
+                if (!user) {
+                    res.status(404).json({ message: 'User not found' })
                 } else {
                     res.json(user)
                 }
@@ -90,16 +99,17 @@ module.exports = {
             })
     },
 
+
     // controller to remove a user from the friends array
     removeFriend(req, res) {
         User.findOneAndUpdate(
-            {_id: req.params.userId},
-            {$pull: {friends: {userId: req.params.friendsId}}},
-            {runValidators: true, new: true}
+            { _id: req.params.userId },
+            { $pull: { friends: { _id: req.params.friendId } } },
+            { new: true }
         )
             .then((user) => {
-                if(!user) {
-                    res.status(404).json({message: 'User not found'});
+                if (!user) {
+                    res.status(404).json({ message: 'User not found' });
                 } else {
                     res.json(student)
                 }

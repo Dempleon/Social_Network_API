@@ -40,4 +40,4 @@ connection.once('open', async () => {
 
     console.table(users);
     process.exit(0);
-})
+});

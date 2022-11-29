@@ -4,7 +4,7 @@ const routes = require('./routes');
 
 const cwd = process.cwd();
 
-const PORT = process.env || 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 // this part is not necessary for express

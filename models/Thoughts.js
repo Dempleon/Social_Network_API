@@ -27,6 +27,7 @@ thoughtSchema.virtual('reactionCount').get(function () {
 })
 
 thoughtSchema.methods.getCreateDate = function () {
+    // todo: format date
     console.log(`Todo: edit this getter function to format the date: ${this.createdAt}`);
 }
 
