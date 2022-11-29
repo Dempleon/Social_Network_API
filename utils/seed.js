@@ -23,6 +23,21 @@ connection.once('open', async () => {
 
     // create 20 users
     for(let i = 0; i < 20; i++) {
-        
+        const thought = getRandomThought();
+
+        const username = getRandomUsername();
+
+        const email = `${username}@email.com`
+
+        users.push({
+            username,
+            email
+        })
     }
+
+    // add users to the collection
+    await User.collection.insertMany(users);
+
+    console.table(users);
+    process.exit(0);
 })
