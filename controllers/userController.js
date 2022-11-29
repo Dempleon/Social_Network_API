@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
-//todo: aggregate functions
+//todo: aggregate functions? are they necessary?
 
 module.exports = {
     // controller to get all users
