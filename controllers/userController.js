@@ -4,7 +4,7 @@ const { User, Thought } = require('../models');
 //todo: aggregate functions
 
 module.exports = {
-    // get all users
+    // controller to get all users
     getAllUsers(req, res) {
         User.find()
             .then(async (users) => {
@@ -19,7 +19,7 @@ module.exports = {
             });
     },
 
-    // get single user with thoughts and friend data
+    // controller to get single user with thoughts and friend data
     // todo: get the thoughts and friends data, might have to use aggregate function
     getUser(req, res) {
         User.findOne({ _id: req.params.userId })
@@ -33,14 +33,14 @@ module.exports = {
             })
     },
 
-    // user post route
+    // controller for user post 
     createUser(req, res) {
         User.create(req.body)
             .then((user) => res.json(student))
             .catch((err) => res.status(500).json(err));
     },
 
-    // delete route to remove single user
+    // controller to remove single user
     deleteUser(req, res) {
         User.findOneAndRemove({ _id: req.params.userId })
             .then((user) => {
@@ -56,7 +56,7 @@ module.exports = {
             });
     },
 
-    // put route to update single user
+    // controller to update single user
     updateUser(req, res) {
         User.findOneAndUpdate({_id: req.params.userId})
             .then((user) => {
@@ -71,7 +71,7 @@ module.exports = {
             });
     },
 
-    // add a new friend to the users friend list
+    // controller to add a new friend to the users friend list
     addFriend(req, res) {
         User.findOneAndUpdate(
             {_id: req.params.userId},
@@ -90,7 +90,7 @@ module.exports = {
             })
     },
 
-    // remove a user from the friends array
+    // controller to remove a user from the friends array
     removeFriend(req, res) {
         User.findOneAndUpdate(
             {_id: req.params.userId},
